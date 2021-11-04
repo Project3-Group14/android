@@ -6,4 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".EditPost">
 
+    <Button
+        android:id="@+id/editPostButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginTop="436dp"
+        android:layout_marginEnd="151dp"
+        android:layout_marginBottom="247dp"
+        android:text="Edit Post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextContent"
+        android:layout_width="349dp"
+        android:layout_height="226dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="178dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="327dp"
+        android:ems="10"
+        android:inputType="text|textMultiLine"
+        android:text="Write stuff here"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextSubject"
+        android:layout_width="347dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="94dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="590dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Subject"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
