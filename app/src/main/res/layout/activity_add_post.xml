@@ -10,15 +10,13 @@
         android:id="@+id/addPostButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="436dp"
-        android:layout_marginEnd="151dp"
         android:layout_marginBottom="247dp"
         android:text="Add Post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/editTextContent"
@@ -29,26 +27,27 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="327dp"
         android:ems="10"
+        android:gravity="top"
+        android:hint="Write stuff here"
         android:inputType="text|textMultiLine"
-        android:text="Write stuff here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/editTextSubject"
         android:layout_width="347dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="94dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="590dp"
+        android:layout_height="89dp"
         android:ems="10"
-        android:inputType="text"
-        android:text="Subject"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="Subject"
+        android:gravity="top"
+        android:inputType="text|textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/editTextContent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

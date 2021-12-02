@@ -15,11 +15,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btn = findViewById(R.id.myPostBtn);
+        Button goToPostbtn = findViewById(R.id.goToAddPostButton);
+
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ViewMyPosts.class));
+            }
+        });
+        goToPostbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddPost.class));
             }
         });
     }
