@@ -17,6 +17,11 @@ public class MainActivity extends AppCompatActivity {
         Button btn = findViewById(R.id.myPostBtn);
         Button goToPostbtn = findViewById(R.id.goToAddPostButton);
         Button goToUsersTestbtn = findViewById(R.id.goToUsersTest);
+        Button editBtn = findViewById(R.id.editProfileButton);
+        String loginUserId = getIntent().getStringExtra("loginUserId");
+        String loginUsername = getIntent().getStringExtra("loginUsername");
+        String loginPassword = getIntent().getStringExtra("loginPassword");
+
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +40,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, UserRetrofitTest.class));
+            }
+        });
+
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EditProfile.class);
+                intent.putExtra("loginUserId", loginUserId);
+                intent.putExtra("loginUsername", loginUsername);
+                intent.putExtra("loginPassword", loginPassword);
+                startActivity(intent);
             }
         });
     }
