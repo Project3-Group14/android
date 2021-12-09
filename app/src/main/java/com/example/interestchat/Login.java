@@ -26,16 +26,19 @@ public class Login extends AppCompatActivity {
     String usernameInput;
     String passwordInput;
     Button login;
-    Boolean check = false;
+    Button register;
+    List<User> usersGlobal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        checkUser();
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
+        register = findViewById(R.id.register);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +57,19 @@ public class Login extends AppCompatActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            checkUser(usernameInput, passwordInput);
-                            boolean valid = getCheck();
-                            System.out.println(valid);
+//                            checkUser(usernameInput, passwordInput);
+                            boolean valid = false;
+                            //System.out.println(valid);
+                            List<User> users = getUsers();
+                            for (User user: users){
+                                if (user.getUsername().equals(usernameInput) && user.getPassword().equals(passwordInput)){
+                                    valid = true;
+                                    break;
+                                }
+                            }
                             if(valid) {
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 //intent.putExtra("userId",userEntity.getId());
-                                setCheckFalse();
                                 startActivity(intent);
                             }
                             else {
@@ -76,21 +85,25 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this, Register.class));
+            }
+        });
     }
 
-    private boolean getCheck(){
-        return this.check;
+
+    private void setUsers(Response<List<User>> response){
+        this.usersGlobal = response.body();
     }
 
-    private void setCheck(){
-        this.check = true;
+    private List<User> getUsers(){
+        return this.usersGlobal;
     }
 
-    private void setCheckFalse(){
-        this.check = false;
-    }
-
-    private void checkUser(String username, String password){
+    private void checkUser(){
         System.out.println("USER: " + username);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://group14-chat.herokuapp.com/")
@@ -103,14 +116,7 @@ public class Login extends AppCompatActivity {
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                List<User> users = response.body();
-                for (User user : users) {
-                    if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                        setCheck();
-                        return;
-                    }
-                }
-
+                setUsers(response);
             }
 
             @Override

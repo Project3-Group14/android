@@ -12,22 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
-        android:text="Login"
+        android:text="Register"
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="36dp" />
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
-        android:hint="Enter Username..."
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="93dp" />
+        android:hint="Enter username..." />
 
     <EditText
         android:id="@+id/password"
@@ -35,9 +31,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
         android:hint="Enter password..."
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="165dp" />
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:text="Register" />
 
     <Button
         android:id="@+id/login"
@@ -45,11 +46,4 @@
         android:layout_height="wrap_content"
         android:layout_margin="20sp"
         android:text="Login" />
-
-    <Button
-        android:id="@+id/register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20sp"
-        android:text="register" />
 </LinearLayout>
