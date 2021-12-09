@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,38 +19,36 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class Login extends AppCompatActivity {
-    public static final String ACTIVITY_LABEL = "LOGIN";
+public class EditProfile extends AppCompatActivity {
+    public static final String ACTIVITY_LABEL = "EDIT_PROFILE";
 
-    EditText username;
+    TextView username;
     EditText password;
-    String usernameInput;
     String passwordInput;
-    Button login;
-    Button register;
+    Button save;
     List<User> usersGlobal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_edit_profile);
+        String loginUserId = getIntent().getStringExtra("loginUserId");
+        String loginUsername = getIntent().getStringExtra("loginUsername");
+        String loginPassword = getIntent().getStringExtra("loginPassword");
         checkUser();
 
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        login = findViewById(R.id.login);
-        register = findViewById(R.id.register);
+        username = (TextView)findViewById(R.id.username);
+        username.setText(loginUsername);
+        password = (EditText)findViewById(R.id.password);
+        password.setHint(loginPassword);
+        save = findViewById(R.id.save);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                usernameInput = username.getText().toString();
                 passwordInput = password.getText().toString();
 
-                if (usernameInput.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Please enter a username", Toast.LENGTH_SHORT).show();
-                }
-                else if (passwordInput.isEmpty()) {
+                if (passwordInput.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please enter a password", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -62,38 +61,31 @@ public class Login extends AppCompatActivity {
                             User corrUser = null;
                             //System.out.println(valid);
                             List<User> users = getUsers();
-                            for (User user: users){
-                                if (user.getUsername().equals(usernameInput) && user.getPassword().equals(passwordInput)){
-                                    valid = true;
-                                    corrUser = user;
-                                    break;
-                                }
-                            }
-                            if(valid) {
-                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                intent.putExtra("loginUserId", corrUser.getUserId().toString());
-                                intent.putExtra("loginUsername", corrUser.getUsername());
-                                intent.putExtra("loginPassword", corrUser.getPassword());
-                                startActivity(intent);
-                            }
-                            else {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getApplicationContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+//                            for (User user: users){
+//                                if (user.getUsername().equals(usernameInput) && user.getPassword().equals(passwordInput)){
+//                                    valid = true;
+//                                    corrUser = user;
+//                                    break;
+//                                }
+//                            }
+//                            if(valid) {
+//                                Intent intent = new Intent(Login.this, MainActivity.class);
+//                                intent.putExtra("loginUserId", corrUser.getUserId().toString());
+//                                intent.putExtra("loginUsername", corrUser.getUsername());
+//                                intent.putExtra("loginPassword", corrUser.getPassword());
+//                                startActivity(intent);
+//                            }
+//                            else {
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        Toast.makeText(getApplicationContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                            }
                         }
                     }).start();
                 }
-            }
-        });
-
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Login.this, Register.class));
             }
         });
     }
