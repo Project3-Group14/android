@@ -60,14 +60,14 @@ public class AddPost extends AppCompatActivity {
         addPostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String subject = subjectField.getText().toString().trim();
-                String content = contentField.getText().toString().trim();
+                String subject = subjectField.getText().toString();
+                String content = contentField.getText().toString();
                 // Check for good post to upload to DB
                 if (!subject.isEmpty() && !content.isEmpty()) {
                     //TODO: retrieve userId from props
                     String userId = "TempUserID";
-                    Toast.makeText(AddPost.this, "Good post!", Toast.LENGTH_LONG).show();
                     createPost(userId, subject, content);
+                    Toast.makeText(AddPost.this, "Good post!", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(AddPost.this, "Bad post!", Toast.LENGTH_LONG).show();                }
@@ -76,9 +76,9 @@ public class AddPost extends AppCompatActivity {
     }
 
     private void createPost(String userId, String subject, String content) {
-        Post post = new Post(userId, subject, content);
+        final Post post = new Post(userId, subject, content);
 
-        Call<Post> call = interestChatApi.createPost("testuserID", "testSub", "testContent");
+        Call<Post> call = interestChatApi.createPost(post);
         call.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
