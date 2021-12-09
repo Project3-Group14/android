@@ -59,17 +59,20 @@ public class Login extends AppCompatActivity {
                         public void run() {
 //                            checkUser(usernameInput, passwordInput);
                             boolean valid = false;
+                            User corrUser = null;
                             //System.out.println(valid);
                             List<User> users = getUsers();
                             for (User user: users){
                                 if (user.getUsername().equals(usernameInput) && user.getPassword().equals(passwordInput)){
                                     valid = true;
+                                    corrUser = user;
                                     break;
                                 }
                             }
                             if(valid) {
                                 Intent intent = new Intent(Login.this, MainActivity.class);
-                                //intent.putExtra("userId",userEntity.getId());
+                                intent.putExtra("loginUserId", corrUser.getUserId().toString());
+                                intent.putExtra("loginUsername", corrUser.getUsername());
                                 startActivity(intent);
                             }
                             else {

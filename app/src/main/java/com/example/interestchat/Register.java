@@ -31,6 +31,9 @@ public class Register extends AppCompatActivity {
         register = findViewById(R.id.register);
         login = findViewById(R.id.login);
 
+        String loginUserId = getIntent().getStringExtra("loginUserId");
+        String loginUsername = getIntent().getStringExtra("loginUsername");
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
