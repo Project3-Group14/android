@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button btn = findViewById(R.id.myPostBtn);
         Button goToPostbtn = findViewById(R.id.goToAddPostButton);
+        Button goToUsersTestbtn = findViewById(R.id.goToUsersTest);
 
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddPost.class));
+            }
+        });
+        goToUsersTestbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UserRetrofitTest.class));
             }
         });
     }

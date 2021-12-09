@@ -1,10 +1,11 @@
 package com.example.interestchat;
 
 import java.util.ArrayList;
-
+import com.google.gson.annotations.SerializedName;
 public class Post {
     private String postUsername;
     private String postSubject;
+    @SerializedName("body")
     private String postContent;
 
     public Post(String name, String subject, String content) {
