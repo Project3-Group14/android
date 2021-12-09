@@ -44,13 +44,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         // Set item views based on your views and data model
         TextView textView = holder.usernameTextView;
-        textView.setText(post.getPostUsername());
+        // TODO: change to query retrofit get username from user
+        textView.setText(post.getUserId());
 
         TextView textView2 = holder.subjectTextView;
-        textView2.setText(post.getPostSubject());
+        textView2.setText(post.getPostTitle());
 
         TextView textView3 = holder.contentTextView;
-        textView3.setText(post.getPostContent());
+        textView3.setText(post.getPostDesc());
 
     }
     @Override
