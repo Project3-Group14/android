@@ -13,6 +13,9 @@
             android:name=".UserRetrofitTest"
             android:exported="true" />
         <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
             android:name=".EditPost"
             android:exported="true" />
         <activity
@@ -28,7 +31,10 @@
             android:name=".AddPost"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Register"
+            android:exported="true" />
+        <activity
+            android:name=".Login"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
