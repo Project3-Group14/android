@@ -16,6 +16,9 @@ public interface InterestChatApi {
     @GET("users/allUsers")
     Call<List<User>> getUsers();
 
+    @POST("users/save")
+    Call<User> createUser(@Body User user);
+
     @POST("posts/save")
     Call<Post> createPost(@Body Post post);
 
