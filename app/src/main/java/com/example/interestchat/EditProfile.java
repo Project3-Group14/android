@@ -26,6 +26,7 @@ public class EditProfile extends AppCompatActivity {
     EditText password;
     String passwordInput;
     Button save;
+    Button home;
     List<User> usersGlobal;
     private InterestChatApi interestChatApi;
 
@@ -43,6 +44,7 @@ public class EditProfile extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
         password.setHint(loginPassword);
         save = findViewById(R.id.save);
+        home = findViewById(R.id.home);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://group14-chat.herokuapp.com/")
@@ -67,10 +69,30 @@ public class EditProfile extends AppCompatActivity {
                             break;
                         }
                     }
-                    System.out.println("HI THEREc" + currUser.getPassword());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Password Successfully Changed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     updateUser(currUser, passwordInput);
-
+                    Intent intent = new Intent(EditProfile.this, MainActivity.class);
+                    intent.putExtra("loginUserId", loginUserId);
+                    intent.putExtra("loginUsername", loginUsername);
+                    intent.putExtra("loginPassword", passwordInput);
+                    startActivity(intent);
                 }
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditProfile.this, MainActivity.class);
+                intent.putExtra("loginUserId", loginUserId);
+                intent.putExtra("loginUsername", loginUsername);
+                intent.putExtra("loginPassword", loginPassword);
+                startActivity(intent);
             }
         });
     }
