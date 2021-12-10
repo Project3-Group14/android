@@ -27,13 +27,21 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ViewMyPosts.class));
+                Intent intent = new Intent(MainActivity.this, ViewMyPosts.class);
+                intent.putExtra("loginUserId",loginUserId);
+                intent.putExtra("loginUsername", loginUsername);
+                intent.putExtra("loginPassword", loginPassword);
+                startActivity(intent);
             }
         });
         goToPostbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddPost.class));
+                Intent intent = new Intent(MainActivity.this, AddPost.class);
+                intent.putExtra("loginUserId",loginUserId);
+                intent.putExtra("loginUsername", loginUsername);
+                intent.putExtra("loginPassword", loginPassword);
+                startActivity(intent);
             }
         });
         goToUsersTestbtn.setOnClickListener(new View.OnClickListener() {
