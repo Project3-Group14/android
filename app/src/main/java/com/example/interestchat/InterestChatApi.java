@@ -22,7 +22,7 @@ public interface InterestChatApi {
     Call<User> createUser(@Body User user);
 
     //@FormUrlEncoded
-    @PUT("users/update/{userId}")
+    @PUT("users/update/userId={userId}")
     Call<User> updateUser(@Path("userId") String userId, @Body User user);
 
     @POST("posts/save")

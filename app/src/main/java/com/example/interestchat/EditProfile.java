@@ -61,12 +61,13 @@ public class EditProfile extends AppCompatActivity {
                 }
                 else {
                     User currUser = null;
-                    for(User user: usersGlobal){
+                    for(User user: getUsers()){
                         if (user.getUserId().toString().equals(loginUserId)){
                             currUser = user;
                             break;
                         }
                     }
+                    System.out.println("HI THEREc" + currUser.getPassword());
                     updateUser(currUser, passwordInput);
 
                 }
