@@ -26,7 +26,9 @@ public class EditProfile extends AppCompatActivity {
     EditText password;
     String passwordInput;
     Button save;
+    Button home;
     List<User> usersGlobal;
+    private InterestChatApi interestChatApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,14 @@ public class EditProfile extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
         password.setHint(loginPassword);
         save = findViewById(R.id.save);
+        home = findViewById(R.id.home);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://group14-chat.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        interestChatApi = retrofit.create(InterestChatApi.class);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,40 +62,37 @@ public class EditProfile extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter a password", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //startActivity(new Intent(Login.this, Homepage.class));
-                    new Thread(new Runnable() {
+                    User currUser = null;
+                    for(User user: getUsers()){
+                        if (user.getUserId().toString().equals(loginUserId)){
+                            currUser = user;
+                            break;
+                        }
+                    }
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            checkUser(usernameInput, passwordInput);
-                            boolean valid = false;
-                            User corrUser = null;
-                            //System.out.println(valid);
-                            List<User> users = getUsers();
-//                            for (User user: users){
-//                                if (user.getUsername().equals(usernameInput) && user.getPassword().equals(passwordInput)){
-//                                    valid = true;
-//                                    corrUser = user;
-//                                    break;
-//                                }
-//                            }
-//                            if(valid) {
-//                                Intent intent = new Intent(Login.this, MainActivity.class);
-//                                intent.putExtra("loginUserId", corrUser.getUserId().toString());
-//                                intent.putExtra("loginUsername", corrUser.getUsername());
-//                                intent.putExtra("loginPassword", corrUser.getPassword());
-//                                startActivity(intent);
-//                            }
-//                            else {
-//                                runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Toast.makeText(getApplicationContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                            }
+                            Toast.makeText(getApplicationContext(), "Password Successfully Changed", Toast.LENGTH_SHORT).show();
                         }
-                    }).start();
+                    });
+                    updateUser(currUser, passwordInput);
+                    Intent intent = new Intent(EditProfile.this, MainActivity.class);
+                    intent.putExtra("loginUserId", loginUserId);
+                    intent.putExtra("loginUsername", loginUsername);
+                    intent.putExtra("loginPassword", passwordInput);
+                    startActivity(intent);
                 }
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditProfile.this, MainActivity.class);
+                intent.putExtra("loginUserId", loginUserId);
+                intent.putExtra("loginUsername", loginUsername);
+                intent.putExtra("loginPassword", loginPassword);
+                startActivity(intent);
             }
         });
     }
@@ -117,6 +124,23 @@ public class EditProfile extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.e(ACTIVITY_LABEL, "failed");
+            }
+        });
+    }
+
+    public void updateUser(User user, String password){
+        user.updateUser(password);
+        Call<User> userCall = interestChatApi.updateUser(user.getUserId().toString(), user);
+
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User userResponse = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.e(ACTIVITY_LABEL, "failed");
             }
         });
