@@ -27,6 +27,7 @@ public class EditProfile extends AppCompatActivity {
     String passwordInput;
     Button save;
     List<User> usersGlobal;
+    private InterestChatApi interestChatApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,13 @@ public class EditProfile extends AppCompatActivity {
         password.setHint(loginPassword);
         save = findViewById(R.id.save);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://group14-chat.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        interestChatApi = retrofit.create(InterestChatApi.class);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,39 +60,15 @@ public class EditProfile extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please enter a password", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //startActivity(new Intent(Login.this, Homepage.class));
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-//                            checkUser(usernameInput, passwordInput);
-                            boolean valid = false;
-                            User corrUser = null;
-                            //System.out.println(valid);
-                            List<User> users = getUsers();
-//                            for (User user: users){
-//                                if (user.getUsername().equals(usernameInput) && user.getPassword().equals(passwordInput)){
-//                                    valid = true;
-//                                    corrUser = user;
-//                                    break;
-//                                }
-//                            }
-//                            if(valid) {
-//                                Intent intent = new Intent(Login.this, MainActivity.class);
-//                                intent.putExtra("loginUserId", corrUser.getUserId().toString());
-//                                intent.putExtra("loginUsername", corrUser.getUsername());
-//                                intent.putExtra("loginPassword", corrUser.getPassword());
-//                                startActivity(intent);
-//                            }
-//                            else {
-//                                runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Toast.makeText(getApplicationContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                            }
+                    User currUser = null;
+                    for(User user: usersGlobal){
+                        if (user.getUserId().toString().equals(loginUserId)){
+                            currUser = user;
+                            break;
                         }
-                    }).start();
+                    }
+                    updateUser(currUser, passwordInput);
+
                 }
             }
         });
@@ -117,6 +101,23 @@ public class EditProfile extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.e(ACTIVITY_LABEL, "failed");
+            }
+        });
+    }
+
+    public void updateUser(User user, String password){
+        user.updateUser(password);
+        Call<User> userCall = interestChatApi.updateUser(user.getUserId().toString(), user);
+
+        userCall.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User userResponse = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
                 Log.e(ACTIVITY_LABEL, "failed");
             }
         });
