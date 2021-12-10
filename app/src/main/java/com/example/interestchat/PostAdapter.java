@@ -63,6 +63,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     return;
                 }
                 username = response.body().getUsername();
+                // Set item views based on your views and data model
                 TextView textView = holder.usernameTextView;
                 // TODO: change to query retrofit get username from user
                 textView.setText(username);
@@ -79,7 +80,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
             }
         });
-        // Set item views based on your views and data model
 
 
     }

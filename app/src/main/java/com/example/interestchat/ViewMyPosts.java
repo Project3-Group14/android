@@ -23,7 +23,7 @@ public class  ViewMyPosts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_my_posts);
         // Lookup the recyclerview in activity layout
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.viewMyPostsRecyclerView);
+        RecyclerView rvPosts = (RecyclerView) findViewById(R.id.viewMyPostsRecyclerView);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://group14-chat.herokuapp.com/")
@@ -47,9 +47,9 @@ public class  ViewMyPosts extends AppCompatActivity {
                 // Create adapter passing in the sample user data
                 PostAdapter adapter = new PostAdapter(posts);
                 // Attach the adapter to the recyclerview to populate items
-                rvContacts.setAdapter(adapter);
+                rvPosts.setAdapter(adapter);
                 // Set layout manager to position the items
-                rvContacts.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rvPosts.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 // That's all!
             }
 
