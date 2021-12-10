@@ -65,7 +65,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 username = response.body().getUsername();
                 // Set item views based on your views and data model
                 TextView textView = holder.usernameTextView;
-                // TODO: change to query retrofit get username from user
                 textView.setText(username);
 
                 TextView textView2 = holder.subjectTextView;
@@ -94,7 +93,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public TextView usernameTextView;
         public TextView subjectTextView;
         public TextView contentTextView;
-
+        public Button commentButton;
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
@@ -105,6 +104,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             usernameTextView = (TextView) itemView.findViewById(R.id.postUsernameItem);
             subjectTextView = (TextView) itemView.findViewById(R.id.postSubjectItem);
             contentTextView = (TextView) itemView.findViewById(R.id.postContentItem);
+            commentButton = (Button) itemView.findViewById(R.id.postCommentButton);
+
         }
     }
 }
