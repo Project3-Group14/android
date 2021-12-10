@@ -46,4 +46,11 @@
         android:layout_margin="20sp"
         android:text="Save" />
 
+    <Button
+        android:id="@+id/home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:text="home" />
+
 </LinearLayout>
