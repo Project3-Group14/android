@@ -25,6 +25,9 @@ public interface InterestChatApi {
     @GET("users/userId/{userId}")
     Call<User> getUserByUserId(@Path("userId") String uid);
 
+    @GET("posts/allPosts")
+    Call<List<Post>> getPosts();
+
     @POST("users/save")
     Call<User> createUser(@Body User user);
 
