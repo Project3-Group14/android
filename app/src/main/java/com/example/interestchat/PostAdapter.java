@@ -10,10 +10,16 @@ import android.widget.TextView;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
+    private String username = "";
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -39,19 +45,42 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(PostAdapter.ViewHolder holder, int position) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://group14-chat.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         // Get the data model based on position
         Post post = mPosts.get(position);
 
+        InterestChatApi interestChatApi = retrofit.create(InterestChatApi.class);
+        Call<User> call = interestChatApi.getUserByUserId(post.getUserId());
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+                username = response.body().getUsername();
+                TextView textView = holder.usernameTextView;
+                // TODO: change to query retrofit get username from user
+                textView.setText(username);
+
+                TextView textView2 = holder.subjectTextView;
+                textView2.setText(post.getPostTitle());
+
+                TextView textView3 = holder.contentTextView;
+                textView3.setText(post.getPostDesc());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
         // Set item views based on your views and data model
-        TextView textView = holder.usernameTextView;
-        // TODO: change to query retrofit get username from user
-        textView.setText(post.getUserId());
 
-        TextView textView2 = holder.subjectTextView;
-        textView2.setText(post.getPostTitle());
-
-        TextView textView3 = holder.contentTextView;
-        textView3.setText(post.getPostDesc());
 
     }
     @Override
