@@ -10,6 +10,8 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+
 import retrofit2.http.Path;
 
 public interface InterestChatApi {
@@ -25,6 +27,10 @@ public interface InterestChatApi {
 
     @POST("users/save")
     Call<User> createUser(@Body User user);
+
+    //@FormUrlEncoded
+    @PUT("users/update/userId={userId}")
+    Call<User> updateUser(@Path("userId") String userId, @Body User user);
 
     @POST("posts/save")
     Call<Post> createPost(@Body Post post);
