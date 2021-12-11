@@ -22,8 +22,17 @@ public interface InterestChatApi {
     @GET("/posts/userId/{userId}")
     Call<List<Post>> getPostsByUserId(@Path("userId") String uid);
 
+    @GET("/posts/postId/{postId}")
+    Call<Post> getPostByPostId(@Path("postId") String pid);
+
     @GET("users/userId/{userId}")
     Call<User> getUserByUserId(@Path("userId") String uid);
+
+    @GET("comments/userId/{userId}")
+    Call<List<Comment>> getCommentsByUserId(@Path("userId") String uid);
+
+    @GET("comments/postId/{postId}")
+    Call<List<Comment>> getCommentsByPostId(@Path("postId") String pid);
 
     @GET("posts/allPosts")
     Call<List<Post>> getPosts();

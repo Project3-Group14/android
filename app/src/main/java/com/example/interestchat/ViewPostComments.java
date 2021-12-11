@@ -11,35 +11,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class  ViewMyPosts extends AppCompatActivity {
-    ArrayList<Post> posts;
+public class  ViewPostComments extends AppCompatActivity {
+    ArrayList<Comment> comments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_my_posts);
-
-        Button btn = findViewById(R.id.postCommentButton);
-        String postId = getIntent().getStringExtra("postId");
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ViewMyPosts.this, ViewPostComments.class);
-                intent.putExtra("postId", postId);
-                startActivity(intent);
-            }
-        });
-
-
+        setContentView(R.layout.activity_view_my_comments);
         // Lookup the recyclerview in activity layout
-        RecyclerView rvPosts = (RecyclerView) findViewById(R.id.viewMyPostsRecyclerView);
+        RecyclerView rvComments = (RecyclerView) findViewById(R.id.viewMyCommentsRecyclerView);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://group14-chat.herokuapp.com/")
@@ -49,28 +33,28 @@ public class  ViewMyPosts extends AppCompatActivity {
         InterestChatApi interestChatApi = retrofit.create(InterestChatApi.class);
 
         Intent intent = getIntent();
-        String userId = intent.getStringExtra("loginUserId");
-        Call<List<Post>> call = interestChatApi.getPostsByUserId(userId);
+        String postId = intent.getStringExtra("postId");
+        Call<List<Comment>> call = interestChatApi.getCommentsByPostId(postId);
 
-        call.enqueue(new Callback<List<Post>>() {
+        call.enqueue(new Callback<List<Comment>>() {
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
                 if (!response.isSuccessful()) {
                     return;
                 }
-                List<Post> posts = response.body();
-                // Initialize posts
+                List<Comment> comments = response.body();
+                // Initialize comments
                 // Create adapter passing in the sample user data
-                PostAdapter adapter = new PostAdapter(posts);
+                CommentAdapter adapter = new CommentAdapter(comments);
                 // Attach the adapter to the recyclerview to populate items
-                rvPosts.setAdapter(adapter);
+                rvComments.setAdapter(adapter);
                 // Set layout manager to position the items
-                rvPosts.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                rvComments.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 // That's all!
             }
 
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
 
             }
         });
