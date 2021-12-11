@@ -21,6 +21,9 @@ import java.util.Map;
 public class AddPost extends AppCompatActivity {
     Button addPostBtn;
     EditText subjectField, contentField;
+    String loginUserId;
+    String loginUsername;
+    String loginPassword;
 
     private InterestChatApi interestChatApi;
 
@@ -31,6 +34,10 @@ public class AddPost extends AppCompatActivity {
         addPostBtn = findViewById(R.id.addPostButton);
         subjectField = findViewById(R.id.editTextSubject);
         contentField = findViewById(R.id.editTextContent);
+
+        loginUserId = getIntent().getStringExtra("loginUserId");
+        loginUsername = getIntent().getStringExtra("loginUsername");
+        loginPassword = getIntent().getStringExtra("loginPassword");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://group14-chat.herokuapp.com/")
@@ -66,10 +73,13 @@ public class AddPost extends AppCompatActivity {
                 // Check for good post to upload to DB
                 if (!subject.isEmpty() && !content.isEmpty()) {
                     //TODO: retrieve userId from props
-                    Intent intent = getIntent();
-                    String userId = intent.getStringExtra("loginUserId");
-                    createPost(userId, subject, content);
+                    createPost(loginUserId, subject, content);
                     Toast.makeText(AddPost.this, "Good post!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(AddPost.this, MainActivity.class);
+                    intent.putExtra("loginUserId",loginUserId);
+                    intent.putExtra("loginUsername", loginUsername);
+                    intent.putExtra("loginPassword", loginPassword);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(AddPost.this, "Bad post!", Toast.LENGTH_LONG).show();                }
